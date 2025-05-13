@@ -1,0 +1,11 @@
+{
+  "all": true,
+  "include": [
+    "src/app.mjs"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary"
+    ],
+    "report-dir": "tests/coverage"
+}

@@ -1,0 +1,54 @@
+import { BaseOp } from './baseOp.mjs';
+
+export class AgentOp extends BaseOp {
+    constructor(request, service) {
+        super(request);
+        this.service = service;
+    }
+    async onGet(response) {
+        const res = await this.service.get(this.getQueryParams());
+
+        res.statusCode = res.statusCode == "OK" ? BaseOp.Constants.StatusCodes.OK : BaseOp.Constants.StatusCodes.INTERNAL_ERROR
+        res["headers"] = this.getCors();
+
+        return res;
+    }
+
+    // agent must be something like that:
+    //  {
+    //     "emailAddress": "fguigui@gmail.com",
+    //     "firstName": "Fred",
+    //     "lastName": "GUIGUI",
+    //     "maincroSubcroIds": [11, 10, 9, 8],
+    //     "groupcroId": 2
+    // }
+    async onPost(response) {
+        const agent = this.getBody();
+        let res = await this.service.create(agent);
+
+        res.statusCode = res.statusCode == "OK" ? BaseOp.Constants.StatusCodes.OK : BaseOp.Constants.StatusCodes.INTERNAL_ERROR
+        res["headers"] = this.getCors();
+
+        return res;
+    }
+
+    async onDelete() {
+        const body = this.getBody();
+        let res = await this.service.delete(body.ids);
+
+        res["statusCode"] = res.statusCode == "OK" ? BaseOp.Constants.StatusCodes.OK : BaseOp.Constants.StatusCodes.INTERNAL_ERROR;
+        res["headers"] = this.getCors();
+
+        return res;
+    }
+
+    async onPut() {
+        const body = this.getBody();
+        let res = await this.service.update(body);
+
+        res["statusCode"] = res.statusCode == "OK" ? BaseOp.Constants.StatusCodes.OK : BaseOp.Constants.StatusCodes.INTERNAL_ERROR;
+        res["headers"] = this.getCors();
+
+        return res;
+    }
+}

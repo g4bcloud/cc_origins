@@ -1,0 +1,40 @@
+{
+  "name": "hello_world",
+  "version": "1.0.0",
+  "description": "hello world sample for NodeJS",
+  "main": "app.js",
+  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "axios": ">=0.21.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.6",
+    "sequelize-auto": "^0.8.8",
+    "@aws-sdk/client-secrets-manager": "^3.565.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "nodemon src/server.mjs",
+    "test": "env-cmd  mocha tests/**/test-*.mjs --timeout 500000",
+    "lint": "eslint src/",
+    "format": "prettier --write 'src/**/*.{mjs,json}'",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "eslint": "^8.56.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1",
+    "supertest": "^6.3.3"
+  }
+}

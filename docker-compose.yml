@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: chan_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .                   # <- now points at THIS directory
+      dockerfile: Dockerfile
+    container_name: chan_api
+    restart: on-failure
+    command: node src/server.mjs
+    volumes:
+      - ./:/usr/src/app:delegated
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      CORS_ORIGIN: '*'
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+

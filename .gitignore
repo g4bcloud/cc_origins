@@ -1,0 +1,13 @@
+node_modules
+build
+npm-debug.log
+.serverless/
+.eslintcache
+.npm
+logs
+*.log
+./stack.json
+/tests/unit/coverage/lcov-report/*
+/tests/unit/coverage/tmp/*
+tests/coverage/lcov-report/
+tests/coverage/
