@@ -68,12 +68,11 @@ export class AgentService extends BaseService {
             };
 
             const q = super.getQuery(query, params);
-
-
+            
             const count = await this.agent.count(q.countQuery);
             const res = await this.agent.findAll(q.query);
 
-            await this.sequelize.close();
+            //await this.sequelize.close();
 
             let agents = [];
 
@@ -111,7 +110,8 @@ export class AgentService extends BaseService {
             };
         }
         catch (error) {
-            await this.sequelize.close();
+            console.log("error ========>", error);;
+            //await this.sequelize.close();
             return {
                 statusCode: "KO",
                 body: JSON.stringify({
@@ -144,7 +144,7 @@ export class AgentService extends BaseService {
             }
 
             await t.commit();
-            await this.sequelize.close();
+            //await this.sequelize.close();
 
             return {
                 statusCode: "OK",
@@ -154,8 +154,9 @@ export class AgentService extends BaseService {
             };
         }
         catch (error) {
+            console.log("error ========>", error);
             await t.rollback();
-            await this.sequelize.close();
+            //await this.sequelize.close();
             return {
                 statusCode: "KO",
                 body: JSON.stringify({
@@ -192,7 +193,7 @@ export class AgentService extends BaseService {
             }, { transaction: t });
 
             await t.commit();
-            await this.sequelize.close();
+            //await this.sequelize.close();
 
             return {
                 statusCode: "OK",
@@ -202,8 +203,9 @@ export class AgentService extends BaseService {
             };
         }
         catch (error) {
+            console.log("error ========>", error);;
             await t.rollback();
-            await this.sequelize.close();
+            //await this.sequelize.close();
             return {
                 statusCode: "KO",
                 body: JSON.stringify({
@@ -213,6 +215,7 @@ export class AgentService extends BaseService {
         }
     }
     async update(agent) {
+        console.log("update =========> agent")
         const t = await this.sequelize.transaction();
 
         try {
@@ -245,7 +248,7 @@ export class AgentService extends BaseService {
             }
 
             await t.commit();
-            await this.sequelize.close();
+            //await this.sequelize.close();
             return {
                 statusCode: "OK",
                 body: JSON.stringify({
@@ -254,8 +257,9 @@ export class AgentService extends BaseService {
             };
         }
         catch (error) {
+            console.log("error ========>", error);;
             await t.rollback();
-            await this.sequelize.close();
+            //await this.sequelize.close();
             return {
                 statusCode: "KO",
                 body: JSON.stringify({

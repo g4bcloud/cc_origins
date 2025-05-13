@@ -177,6 +177,7 @@ export class GroupCroService extends BaseService {
         }
     }
     async update(groupCro) {
+        console.log(`put groupCro ============> ${JSON.stringify(groupCro)}`);
         const gc = {
             "name": groupCro.name
         }

@@ -195,6 +195,7 @@ export class SubcroService extends BaseService {
         }
     }
     async update(subcro) {
+        console.log(`subcro ============> ${JSON.stringify(subcro)}`);
         const t = await this.sequelize.transaction();
 
         try {

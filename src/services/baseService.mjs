@@ -8,10 +8,22 @@ export class BaseService {
         const region = process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION;
         const cert = certs[region];
         config.dialectOptions["ssl"]["ca"] = cert;
+        console.log(`config =======> ${JSON.stringify({
+            dialect: config.dialect,
+            host: process.env.ADMIN_PSQL_ENDPOINT,
+            port: config.port,
+            username: secrets.username,
+            password: secrets.password,
+            database: config.database,
+            logging: console.log,
+            pool: config.pool,
+            dialectOptions: config.dialectOptions,
+            retry: config.retry
+        })}`)
 
         this.sequelize = new Sequelize({
             dialect: config.dialect,
-            host: endPoint,
+            host: process.env.ADMIN_PSQL_ENDPOINT,
             port: config.port,
             username: secrets.username,
             password: secrets.password,
@@ -21,109 +33,6 @@ export class BaseService {
             dialectOptions: config.dialectOptions,
             retry: config.retry
         });
-
-        // // Reader Lambda
-        // const config = {
-        //     dialect: "postgres",
-        //     port: 5432,
-        //     host: process.env.USER_PSQL_ENDPOINT,  // Reader endpoint
-        //     database: "Accor",
-        //     username: "ngd_master_user",
-        //     password: "mIELrhWfSxuelaeGJ9xD+",
-        //     pool: {
-        //         max: 3,
-        //         min: 0,
-        //         acquire: 60000,
-        //         idle: 10000
-        //     },
-        //     dialectOptions: {
-        //         ssl: {
-        //             require: true,
-        //             rejectUnauthorized: true,
-        //             ca: "..."
-        //         },
-        //         targetServerType: "any",
-        //         preferSecondary: true
-        //     }
-        // };
-
-        // // Writer Lambda
-        // const config = {
-        //     dialect: "postgres",
-        //     port: 5432,
-        //     host: process.env.ADMIN_PSQL_ENDPOINT,  // Writer endpoint
-        //     database: "Accor",
-        //     username: "ngd_master_user",
-        //     password: "mIELrhWfSxuelaeGJ9xD+",
-        //     pool: {
-        //         max: 1,
-        //         min: 0,
-        //         acquire: 90000,
-        //         idle: 5000
-        //     },
-        //     dialectOptions: {
-        //         ssl: {
-        //             require: true,
-        //             rejectUnauthorized: false,
-        //             ca: "..."
-        //         },
-        //         targetServerType: "primary",
-        //         preferPrimary: true
-        //     }
-        // };
-
-
-        // {
-        //     "dialect": "postgres",
-        //         "port": 5432,
-        //             "host": "${PSQL_ENDPOINT}",
-        //                 "database": "Accor",
-        //                     "username": "ngd_master_user",
-        //                         "password": "mIELrhWfSxuelaeGJ9xD+",
-        //                             "pool": {
-        //         "max": 3,
-        //             "min": 0,
-        //                 "acquire": 60000,
-        //                     "idle": 10000,
-        //                         "evict": 30000
-        //     },
-        //     "dialectOptions": {
-        //         "ssl": {
-        //             "require": true,
-        //                 "rejectUnauthorized": true,
-        //                     "ca": "..."
-        //         },
-        //         "connectTimeout": 30000,
-        //             "statement_timeout": 30000,
-        //                 "idle_in_transaction_session_timeout": 30000
-        //     }
-        // }
-
-        // {
-        //     "dialect": "postgres",
-        //         "port": 5432,
-        //             "host": "${PSQL_ENDPOINT}",
-        //                 "database": "Accor",
-        //                     "username": "ngd_master_user",
-        //                         "password": "mIELrhWfSxuelaeGJ9xD+",
-        //                             "pool": {
-        //         "max": 1,
-        //             "min": 0,
-        //                 "acquire": 90000,
-        //                     "idle": 5000,
-        //                         "evict": 10000
-        //     },
-        //     "dialectOptions": {
-        //         "ssl": {
-        //             "require": true,
-        //                 "rejectUnauthorized": false,
-        //                     "ca": "..."
-        //         },
-        //         "connectTimeout": 60000,
-        //             "statement_timeout": 60000,
-        //                 "idle_in_transaction_session_timeout": 60000
-        //     }
-        // }
 
         this.baseModels = initModels(this.sequelize);
     }
